@@ -7,7 +7,7 @@ trigger:
 - master
 
 jobs:
-  - job: NodeInstall
+  - job: Build
 
     pool:
       vmImage: 'windows-latest'
@@ -18,25 +18,18 @@ jobs:
         versionSpec: '12.x'
       displayName: 'Install Node.js'
 
-
-  - job: WhatsinApiBuild
-    pool:
-      vmImage: 'windows-latest'
-    dependsOn: NodeInstall
-
-    steps:          
     - script: |
         npm install
-      displayName: 'Install dependencies'
+      displayName: 'Install API dependencies'
       workingDirectory: 'api'
   
     - script: |
         npm run build
-      displayName: 'Build'
+      displayName: 'Build API'
       workingDirectory: 'api'
 
     - task: CopyFiles@2
-      displayName: 'Copy files'
+      displayName: 'Copy API files'
       inputs:
         SourceFolder: 'api'
         Contents: |
@@ -52,7 +45,7 @@ jobs:
         OverWrite: true
 
     - task: ArchiveFiles@2
-      displayName: 'Archive files'
+      displayName: 'Archive API files'
       inputs:
         rootFolderOrFile: 'api\deploy'
         includeRootFolder: false
@@ -61,37 +54,22 @@ jobs:
         replaceExistingArchive: true
 
     - task: PublishBuildArtifacts@1
+      displayName: "Publish API artifact"
       inputs:
         PathtoPublish: '$(Build.ArtifactStagingDirectory)'
         ArtifactName: 'whatsin-api'
         publishLocation: 'Container'
-  
-  
-  
-  - job: WhatsinUiBuild
-    pool:
-      vmImage: 'windows-latest'
-    dependsOn: NodeInstall
-  
-    steps:
+        
     - script: |
         npm install
-      displayName: 'Install dependencies'
+      displayName: 'Install UI dependencies'
   
     - script: |
         npm run build
-      displayName: 'Build'
-
-    # - task: CopyFiles@2
-    #   displayName: 'Copy files'
-    #   inputs:
-    #     SourceFolder: 'dist'
-    #     Contents: '**'
-    #     TargetFolder: '$(Build.ArtifactStagingDirectory)\whatsin'
-    #     CleanTargetFolder: true
-    #     OverWrite: true
+      displayName: 'Build UI'
 
     - task: PublishBuildArtifacts@1
+      displayName: "Publish UI artifact"
       inputs:
         PathtoPublish: 'dist'
         ArtifactName: 'whatsin'
