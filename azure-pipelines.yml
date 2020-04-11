@@ -1,0 +1,98 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+- master
+
+jobs:
+  - job: NodeInstall
+
+    pool:
+      vmImage: 'windows-latest'
+
+    steps:
+    - task: NodeTool@0
+      inputs:
+        versionSpec: '12.x'
+      displayName: 'Install Node.js'
+
+
+  - job: WhatsinApiBuild
+    pool:
+      vmImage: 'windows-latest'
+    dependsOn: NodeInstall
+
+    steps:          
+    - script: |
+        npm install
+      displayName: 'Install dependencies'
+      workingDirectory: 'api'
+  
+    - script: |
+        npm run build
+      displayName: 'Build'
+      workingDirectory: 'api'
+
+    - task: CopyFiles@2
+      displayName: 'Copy files'
+      inputs:
+        SourceFolder: 'api'
+        Contents: |
+          dist\**
+          host.json
+          initialise\**
+          node_modules\**
+          package.json
+          ping\**
+          proxies.json
+        TargetFolder: 'api\deploy'
+        CleanTargetFolder: true
+        OverWrite: true
+
+    - task: ArchiveFiles@2
+      displayName: 'Archive files'
+      inputs:
+        rootFolderOrFile: 'api\deploy'
+        includeRootFolder: false
+        archiveType: 'zip'
+        archiveFile: '$(Build.ArtifactStagingDirectory)\api.zip'
+        replaceExistingArchive: true
+
+    - task: PublishBuildArtifacts@1
+      inputs:
+        PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+        ArtifactName: 'whatsin-api'
+        publishLocation: 'Container'
+  
+  
+  
+  - job: WhatsinUiBuild
+    pool:
+      vmImage: 'windows-latest'
+    dependsOn: NodeInstall
+  
+    steps:
+    - script: |
+        npm install
+      displayName: 'Install dependencies'
+  
+    - script: |
+        npm run build
+      displayName: 'Build'
+
+    # - task: CopyFiles@2
+    #   displayName: 'Copy files'
+    #   inputs:
+    #     SourceFolder: 'dist'
+    #     Contents: '**'
+    #     TargetFolder: '$(Build.ArtifactStagingDirectory)\whatsin'
+    #     CleanTargetFolder: true
+    #     OverWrite: true
+
+    - task: PublishBuildArtifacts@1
+      inputs:
+        PathtoPublish: 'dist'
+        ArtifactName: 'whatsin'
+        publishLocation: 'Container'
