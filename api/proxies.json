@@ -2,6 +2,19 @@
 {
   "$schema": "http://json.schemastore.org/proxies",
   "proxies": {
+    "api": {
+        "matchCondition": {
+            "route": "/api/{restOfPath}",
+            "methods": [
+                "GET",
+                "DELETE",
+                "HEAD",
+                "POST",
+                "PUT"
+            ]
+        },
+        "backendUri": "https://whatsin.azurewebsites.net/api/{restOfPath}"
+    },
       "root": {
           "matchCondition": {
               "route": "/",
