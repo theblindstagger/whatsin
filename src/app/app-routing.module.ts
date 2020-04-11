@@ -4,7 +4,8 @@ import { ListsComponent } from './lists/lists.component';
 
 
 const routes: Routes = [
-  { path: "/", component: ListsComponent }
+  { path: "", redirectTo: 'lists', pathMatch: 'full' },
+  { path: "lists", component: ListsComponent }
 ];
 
 @NgModule({
