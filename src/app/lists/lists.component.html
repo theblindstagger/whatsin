@@ -3,39 +3,8 @@
   <!-- Applying the mat-tyography class adds styles for native elements. -->
   <section class="mat-typography title-group">
     <div class="productCards">
-      <mat-card class="list-summary">
-        <mat-card-title>
-          <mat-icon color="primary" inline="true">view_list</mat-icon>
-          Freezer
-        </mat-card-title>
-        <mat-card-subtitle>
-          32 items
-        </mat-card-subtitle>
-      </mat-card>
-      <mat-card class="list-summary">
-        <mat-card-title>
-          <mat-icon color="primary" inline="true">list</mat-icon>
-          Pantry
-        </mat-card-title>
-        <mat-card-subtitle>
-          53 items
-        </mat-card-subtitle>
-      </mat-card>
-      <mat-card class="list-summary">
-        <mat-card-title>
-          <mat-icon color="primary" inline="true">list_alt</mat-icon>
-          Laundry
-        </mat-card-title>
-        <mat-card-subtitle>
-          12 items
-        </mat-card-subtitle>
-      </mat-card>
-      <mat-card class="list-summary">
-        <mat-card-title>
-          <mat-icon color="accent" inline="true">add</mat-icon>
-          Add new list
-        </mat-card-title>
-      </mat-card>
+      <list-summary *ngFor="let list of lists | async" [list]="list"></list-summary>
+      <add-list></add-list>
     </div>
   </section>
 </div>

@@ -8,11 +8,17 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { AngularMaterialModule } from './angular-material.module';
+import { ListSummaryComponent } from './list-summary/list-summary.component';
+import { AddListComponent } from './add-list/add-list.component';
+import { ListsService } from './lists/lists.service';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
     AppComponent,
-    ListsComponent
+    ListsComponent,
+    ListSummaryComponent,
+    AddListComponent
   ],
   imports: [
     BrowserModule,
@@ -20,9 +26,12 @@ import { AngularMaterialModule } from './angular-material.module';
     BrowserAnimationsModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
     AngularMaterialModule,
-    HammerModule
+    HammerModule,
+    FormsModule
   ],
-  providers: [],
+  providers: [
+    ListsService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

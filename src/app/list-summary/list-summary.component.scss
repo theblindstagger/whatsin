@@ -1,0 +1,29 @@
+.list-summary {
+  margin: 0.5em;
+
+  .mat-card-title {
+    display: flex;
+
+    .fill {
+      flex: 1
+    }
+  }
+  
+  .mat-icon {
+    vertical-align: top;
+    font-size: 1.25em;
+    padding-right: 0.25em;
+  }
+
+  .mat-chip {
+    margin-top: -0.125em;
+  }
+
+  .container {
+    display: flex;
+  }
+
+  .mat-card-subtitle {
+    padding-left: 3em;
+  }
+}

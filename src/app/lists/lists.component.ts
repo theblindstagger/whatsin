@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ListsService } from './lists.service';
+import { Observable, of } from 'rxjs';
 
 @Component({
   selector: 'app-lists',
@@ -7,7 +9,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ListsComponent implements OnInit {
 
-  ngOnInit() {
+  lists: Observable<ListSummary[]> = of([]);
 
+  constructor(private listService: ListsService) {
   }
+
+  ngOnInit() {
+    this.lists = this.listService.getLists();
+  }
+}
+
+export interface ListSummary {
+  name: string,
+  itemCount: number
 }
