@@ -1,8 +1,9 @@
 
 <mat-toolbar color="primary" class="header">
   <span class="nav-tool-items">
-    <span>Whatsin</span>
+    <span (click)="onHomeClick()">Whatsin</span>
+    <span *ngIf="activeListName"> > {{activeListName}}</span>
   </span>
 </mat-toolbar>
-
+<div class="spacer"></div>
 <router-outlet></router-outlet>

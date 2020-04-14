@@ -1,0 +1,14 @@
+<mat-card class="item-container">
+  <mat-card-content>
+    <mat-form-field class="item-field">
+      <input matInput [(ngModel)]="item.name">
+    </mat-form-field>
+    <button mat-stroked-button class="item-button decrement-button" (click)="decrement()" [disabled]="!canDecrement()">
+      <mat-icon inline="true">remove</mat-icon>
+    </button>
+    <label class="quantity">{{item.quantity}}</label>
+    <button mat-stroked-button class="item-button increment-button" (click)="increment()">
+      <mat-icon inline="true">add</mat-icon>
+    </button>
+  </mat-card-content>
+</mat-card>

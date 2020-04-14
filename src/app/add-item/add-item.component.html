@@ -1,0 +1,11 @@
+<mat-card class="item-container">
+  <mat-card-content>
+    <mat-form-field class="item-field">
+      <input matInput [(ngModel)]="newItemName">
+    </mat-form-field>
+    <button mat-stroked-button class="item-button" (click)="addItem()">
+      <mat-icon inline="true">add</mat-icon>
+      Add
+    </button>
+  </mat-card-content>
+</mat-card>

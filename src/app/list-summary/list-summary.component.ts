@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { ListSummary } from '../lists/lists.component';
+import { List } from '../lists/lists.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'list-summary',
@@ -7,10 +8,14 @@ import { ListSummary } from '../lists/lists.component';
   styleUrls: ['./list-summary.component.scss']
 })
 export class ListSummaryComponent implements OnInit {
-  @Input("list") list: ListSummary = null;
+  @Input("list") list: List = null;
 
-  constructor() { }
+  constructor(private router: Router) { }
 
   ngOnInit(): void {
+  }
+
+  onClick = () => {
+    this.router.navigate(["list", this.list.id]);
   }
 }

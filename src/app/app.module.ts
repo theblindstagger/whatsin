@@ -12,13 +12,20 @@ import { ListSummaryComponent } from './list-summary/list-summary.component';
 import { AddListComponent } from './add-list/add-list.component';
 import { ListsService } from './lists/lists.service';
 import { FormsModule } from '@angular/forms';
+import { ListDetailsComponent } from './list-details/list-details.component';
+import { ListItemComponent } from './list-item/list-item.component';
+import { AppService } from './app.service';
+import { AddItemComponent } from './add-item/add-item.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ListsComponent,
     ListSummaryComponent,
-    AddListComponent
+    AddListComponent,
+    ListDetailsComponent,
+    ListItemComponent,
+    AddItemComponent
   ],
   imports: [
     BrowserModule,
@@ -30,7 +37,8 @@ import { FormsModule } from '@angular/forms';
     FormsModule
   ],
   providers: [
-    ListsService
+    ListsService,
+    AppService
   ],
   bootstrap: [AppComponent]
 })

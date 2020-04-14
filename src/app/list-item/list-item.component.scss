@@ -1,0 +1,37 @@
+.item-container {
+  padding-top: 0;
+  padding-bottom: 0;
+
+  .mat-card {
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+  }
+
+  .mat-card-content {
+    display: flex;
+    align-items: center;
+  }
+
+  .mat-form-field-wrapper {
+    padding-bottom: 0.5em !important;
+  }
+
+  .quantity {
+    min-width: 1.5em;
+    padding-right: 0.5em;
+    text-align: right;
+  }
+
+  .item-field {
+    flex: 1;
+  }
+
+  .item-button {
+    min-width: unset;
+    margin-left: 0.5em;
+  
+    &.decrement-button {
+      margin-right: 0.5em;
+    }
+  }
+}
