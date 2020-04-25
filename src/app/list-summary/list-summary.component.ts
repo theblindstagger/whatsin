@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { List } from '../lists/lists.service';
+import { List } from '../shared/lists.definition';
 import { Router } from '@angular/router';
 
 @Component({
@@ -16,6 +16,6 @@ export class ListSummaryComponent implements OnInit {
   }
 
   onClick = () => {
-    this.router.navigate(["list", this.list.id]);
+    this.router.navigate(["list", this.list.id.toString()]);
   }
 }

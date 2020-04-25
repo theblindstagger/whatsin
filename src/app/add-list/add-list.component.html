@@ -8,7 +8,7 @@
       <input matInput placeholder="Enter list name" [(ngModel)]="newListName" name="newListName">
     </mat-form-field>
     <div class="button-container">
-      <button mat-stroked-button (click)="onListAdded()" class="pull-right" [disabled]="!newListName">Add</button>
+      <button mat-stroked-button (click)="onListAdded()" class="pull-right" [disabled]="isAddDisabled()">Add</button>
       <button mat-stroked-button (click)="resetForm()">Cancel</button>
     </div>
   </mat-card-content>

@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { List, ListsService } from '../lists/lists.service';
+import { List } from '../shared/lists.definition';
 import { AppService } from '../app.service';
+import { Guid } from 'guid-typescript';
+import { ListsStore } from '../shared/lists.store';
 
 @Component({
   selector: 'list-details',
@@ -15,24 +17,14 @@ export class ListDetailsComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute, 
-    private listService: ListsService,
+    private listsStore: ListsStore,
     private appService: AppService) { }
 
   ngOnInit(): void {
-    this.listService.listItemAdded.subscribe(this.onListItemAdded);
     this.route.paramMap.subscribe(params => {
-      this.list = this.listService.getList(parseInt(params.get("id")));
+      this.list = this.listsStore.getList(Guid.parse(params.get("id")));
       this.appService.listActivated.next(this.list.name);
       this.isLoaded = true;
     });
   }
-
-  onListItemAdded = (newListItemName: string) => {
-    this.list.items.push({
-      id: 0,
-      name: newListItemName,
-      quantity: 1
-    });
-  }
-
 }

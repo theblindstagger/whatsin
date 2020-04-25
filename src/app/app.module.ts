@@ -10,12 +10,12 @@ import { environment } from '../environments/environment';
 import { AngularMaterialModule } from './angular-material.module';
 import { ListSummaryComponent } from './list-summary/list-summary.component';
 import { AddListComponent } from './add-list/add-list.component';
-import { ListsService } from './lists/lists.service';
 import { FormsModule } from '@angular/forms';
 import { ListDetailsComponent } from './list-details/list-details.component';
 import { ListItemComponent } from './list-item/list-item.component';
 import { AppService } from './app.service';
 import { AddItemComponent } from './add-item/add-item.component';
+import { ListsStore } from './shared/lists.store';
 
 @NgModule({
   declarations: [
@@ -37,7 +37,7 @@ import { AddItemComponent } from './add-item/add-item.component';
     FormsModule
   ],
   providers: [
-    ListsService,
+    ListsStore,
     AppService
   ],
   bootstrap: [AppComponent]

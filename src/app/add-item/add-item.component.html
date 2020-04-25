@@ -3,7 +3,7 @@
     <mat-form-field class="item-field">
       <input matInput [(ngModel)]="newItemName">
     </mat-form-field>
-    <button mat-stroked-button class="item-button" (click)="addItem()">
+    <button mat-stroked-button class="item-button" (click)="addItem()" [disabled]="isAddDisabled()">
       <mat-icon inline="true">add</mat-icon>
       Add
     </button>

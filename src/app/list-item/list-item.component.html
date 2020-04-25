@@ -1,6 +1,6 @@
 <mat-card class="item-container">
   <mat-card-content>
-    <mat-form-field class="item-field">
+    <mat-form-field class="item-field" (change)="onItemRenamed()">
       <input matInput [(ngModel)]="item.name">
     </mat-form-field>
     <button mat-stroked-button class="item-button decrement-button" (click)="decrement()" [disabled]="!canDecrement()">

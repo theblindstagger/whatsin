@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ListsService } from '../lists/lists.service';
+import { ListsStore } from '../shared/lists.store';
 
 @Component({
   selector: 'add-list',
@@ -11,7 +11,7 @@ export class AddListComponent implements OnInit {
   isAddingNewList: boolean = false;
   newListName: string = "";
 
-  constructor(private listService: ListsService) { }
+  constructor(private listsStore: ListsStore) { }
 
   ngOnInit(): void {
   }
@@ -21,9 +21,11 @@ export class AddListComponent implements OnInit {
   }
 
   onListAdded = () => {
-    this.listService.listCreated.next(this.newListName);
+    this.listsStore.addList(this.newListName);
     this.resetForm();
   }
+
+  isAddDisabled = () => !this.newListName;
 
   resetForm = () => {
     this.newListName = "";

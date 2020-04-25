@@ -1,5 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { IListItem } from 'shared/list.definition';
+import { Guid } from 'guid-typescript';
+import { ListsStore } from '../shared/lists.store';
 
 @Component({
   selector: 'list-item',
@@ -7,11 +9,20 @@ import { IListItem } from 'shared/list.definition';
   styleUrls: ['./list-item.component.scss']
 })
 export class ListItemComponent implements OnInit {
+  @Input("listId") listId: Guid;
   @Input("item") item: IListItem;
   
-  constructor() { }
+  constructor(private listsStore: ListsStore) { }
 
   ngOnInit(): void {
+  }
+
+  onItemRenamed = () => {
+    this.listsStore.renameItem(this.listId, this.item.id, this.item.name);
+  }
+
+  increment = () => {
+    this.listsStore.incrementListItemQuantity(this.listId, this.item.id);
   }
 
   canDecrement = () => {
@@ -19,11 +30,6 @@ export class ListItemComponent implements OnInit {
   }
 
   decrement = () => {
-    this.item.quantity--;
+    this.listsStore.decrementListItemQuantity(this.listId, this.item.id);
   }
-
-  increment = () => {
-    this.item.quantity++;
-  }
-
 }
