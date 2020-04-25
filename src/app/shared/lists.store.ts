@@ -4,6 +4,7 @@ import { IList, ObjectState } from 'shared/list.definition';
 import { Guid } from 'guid-typescript';
 import { debounce } from 'rxjs/operators';
 import { List, ListItem } from './lists.definition';
+import { ListItemComponent } from '../list-item/list-item.component';
 @Injectable({
   providedIn: 'root'
 })
@@ -60,49 +61,119 @@ export class ListsStore {
     state: ObjectState.notchanged
   }
   ];
+
   private _lists: BehaviorSubject<List[]> = new BehaviorSubject<List[]>(this.rawData.map(list => new List(list.name, list.id, list.items)));
+
   public readonly lists: Observable<List[]> = this._lists.asObservable();
+
   constructor() {
     this.lists.subscribe((lists: List[]) => {
       console.log("Updated list store");
     });
     this.lists.pipe(debounce(() => interval(2000))).subscribe((lists: List[]) => {
+      const dto = this.determineChanges();
       console.log("Call save");
     });
   }
+
   public getList = (listId: Guid): List => {
     return this._lists.getValue().find(list => list.id.equals(listId));
   };
+
   public addListItem = (listId: Guid, itemName: string) => {
     const item: ListItem = new ListItem(itemName);
     this.getList(listId).items.push(item);
     this.publishUpdates();
   };
+
   public incrementListItemQuantity = (listId: Guid, itemId: Guid) => {
     this.getListItem(listId, itemId).increment();
     this.publishUpdates();
   };
+
   public decrementListItemQuantity = (listId: Guid, itemId: Guid) => {
     this.getListItem(listId, itemId).decrement();
     this.publishUpdates();
   };
+
   public addList = (listName: string) => {
     const list: List = new List(listName);
     this._lists.getValue().push(list);
     this.publishUpdates();
   };
+
   public renameList = (listId: Guid, listName: string) => {
     this.getList(listId).name = listName;
     this.publishUpdates();
   };
+
   public renameItem = (listId: Guid, itemId: Guid, itemName: string) => {
     this.getListItem(listId, itemId).name = itemName;
     this.publishUpdates;
   };
+
   private publishUpdates = () => {
     this._lists.next(this._lists.getValue());
   };
+
   private getListItem = (listId: Guid, itemId: Guid): ListItem => {
     return this.getList(listId).items.find(item => item.id.equals(itemId));
   };
+
+  private determineChanges = (): UpdateDto => {
+    const listsToSave = 
+            this._lists
+                .getValue()
+                .filter(list => list.state !== ObjectState.notchanged)
+                .map(list => new ListUpdateDto(list.id, list.name, list.state));
+
+    const itemsToSave: ItemUpdateDto[] = [];
+
+    this._lists
+        .getValue()
+        .forEach((list: IList) => {
+            list.items
+                .filter(item => item.state !== ObjectState.notchanged)
+                .map(item => new ItemUpdateDto(item.id, list.id, item.name, item.quantity, item.state))
+                .forEach(dto => itemsToSave.push(dto));
+        });
+
+    return {
+      lists: listsToSave,
+      items: itemsToSave
+    }
+  }
+}
+
+export class ListUpdateDto {
+  id: Guid;
+  name: string;
+  state: ObjectState;
+
+  constructor(id: Guid, name: string, state: ObjectState) {
+    this.id = id;
+    this.name = name;
+    this.state = state;
+  }
+}
+
+export class ItemUpdateDto {
+  id: Guid;
+  listId: Guid;
+  name: string;
+  quantity: number;
+  state: ObjectState;
+
+  constructor(id: Guid, listId: Guid, name: string, quantity: number, state: ObjectState) {
+    this.id = id;
+    this.listId = listId;
+    this.name = name;
+    this.quantity = quantity;
+    this.state = state;
+  }
+}
+
+export class UpdateDto {
+  lists: ListUpdateDto[];
+  items: ItemUpdateDto[];
 }

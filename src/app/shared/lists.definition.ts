@@ -1,4 +1,4 @@
-import { IList, IListItem, ObjectWithState } from 'shared/list.definition';
+import { IList, IListItem, ObjectWithState, ObjectState } from 'shared/list.definition';
 import { Guid } from 'guid-typescript';
 
 export class List extends ObjectWithState implements IList {
@@ -6,12 +6,13 @@ export class List extends ObjectWithState implements IList {
   name: string;
   items?: ListItem[];
 
-  constructor(name: string, id: Guid = Guid.create(), items: IListItem[] = []) {
+  constructor(name: string, id: Guid = null, items: IListItem[] = []) {
     super();
-
-    this.id = id;
+    
+    this.id = id || Guid.create();
     this.name = name;
     this.items = items.map(item => new ListItem(item.name, item.id, item.quantity));
+    this.state = id ? ObjectState.notchanged : ObjectState.added;
   }
 
   get itemCount(): number {
@@ -19,10 +20,11 @@ export class List extends ObjectWithState implements IList {
   }
 
   get totalCount(): number {
-    return this
-              .items
-              .map((item:ListItem) => item.quantity)
-              .reduce((a: number, b: number): number => a + b);
+    return this.itemCount 
+      ? this.items
+            .map((item:ListItem) => item.quantity)
+            .reduce((a: number, b: number): number => a + b)
+      : 0;
   }
 
   public updateName(name: string) {
@@ -36,12 +38,13 @@ export class ListItem extends ObjectWithState implements IListItem {
   name: string;
   quantity: number;
 
-  constructor(name: string, id: Guid = Guid.create(), quantity: number = 1) {
+  constructor(name: string, id: Guid = null, quantity: number = 1) {
     super();
 
-    this.id = id;
+    this.id = id ?? Guid.create();
     this.name = name;
     this.quantity = quantity;
+    this.state = id ? ObjectState.notchanged : ObjectState.added;
   }
 
   public increment(): number {
