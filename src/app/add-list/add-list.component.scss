@@ -1,5 +1,6 @@
 .add-list {
-  margin: 0.5em;
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
 
   .mat-title {
     display: flex;
@@ -17,18 +18,5 @@
 
   mat-card-content {
     padding-left: 3em;
-
-    .button-container {
-      display: flex;
-      justify-content: flex-end;
-
-      button {
-        margin-left: 1em;
-      }
-    }
-  }
-
-  .full-width {
-    width: 100%;
   }
 }

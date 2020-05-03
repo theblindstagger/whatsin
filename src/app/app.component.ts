@@ -2,6 +2,7 @@ import { Component, ViewChild, HostListener } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
 import { AppService } from './app.service';
 import { Router } from '@angular/router';
+import { AuthenticateService } from './authenticate/authenticate.service';
 
 @Component({
   selector: 'app-root',
@@ -14,11 +15,16 @@ export class AppComponent {
 
   constructor(
     private appService: AppService,
-    private router: Router) {
-
+    private router: Router,
+    private authenticateService: AuthenticateService) {
   }
 
   ngOnInit() {
+    if (!this.authenticateService.isTokenValid()) {
+      this.router.navigate(["login"]);
+    }
+
+
     this.appService.listActivated.subscribe(this.onListActivated);
     this.appService.listDeactivated.subscribe(this.onListDeactivated);
   }

@@ -1,0 +1,20 @@
+<div class="login-container">
+  <div>
+    <mat-form-field class="full-width">
+      <mat-label>Username</mat-label>
+      <input matInput [(ngModel)]="username">
+    </mat-form-field>
+  </div>
+  <div>
+    <mat-form-field class="full-width">
+      <mat-label>Password</mat-label>
+      <input matInput type="password" [(ngModel)]="password">
+    </mat-form-field>
+  </div>
+  <div class="button-container">
+    <button mat-stroked-button (click)="login()" [disabled]="!canLogin()">
+      <mat-icon inline="true">keyboard_arrow_right</mat-icon>
+      Login
+    </button>
+  </div>
+</div>

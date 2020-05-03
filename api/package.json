@@ -9,7 +9,13 @@
     "start": "func start",
     "test": "echo \"No tests yet...\""
   },
-  "dependencies": {},
+  "dependencies": {
+    "azure-storage": "^2.10.3",
+    "dotenv": "^8.2.0",
+    "guid-typescript": "^1.0.9",
+    "jwt-simple": "^0.5.6",
+    "moment": "^2.24.0"
+  },
   "devDependencies": {
     "@azure/functions": "^1.0.2-beta2",
     "typescript": "^3.3.3"

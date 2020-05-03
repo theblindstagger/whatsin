@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Observable, BehaviorSubject, interval } from 'rxjs';
-import { IList, ObjectState } from 'shared/list.definition';
+import { IList, ObjectState, UpdateDto, ListUpdateDto, ItemUpdateDto } from 'shared/list.definition';
 import { Guid } from 'guid-typescript';
 import { debounce } from 'rxjs/operators';
 import { List, ListItem } from './lists.definition';
-import { ListItemComponent } from '../list-item/list-item.component';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -143,37 +143,4 @@ export class ListsStore {
       items: itemsToSave
     }
   }
-}
-
-export class ListUpdateDto {
-  id: Guid;
-  name: string;
-  state: ObjectState;
-
-  constructor(id: Guid, name: string, state: ObjectState) {
-    this.id = id;
-    this.name = name;
-    this.state = state;
-  }
-}
-
-export class ItemUpdateDto {
-  id: Guid;
-  listId: Guid;
-  name: string;
-  quantity: number;
-  state: ObjectState;
-
-  constructor(id: Guid, listId: Guid, name: string, quantity: number, state: ObjectState) {
-    this.id = id;
-    this.listId = listId;
-    this.name = name;
-    this.quantity = quantity;
-    this.state = state;
-  }
-}
-
-export class UpdateDto {
-  lists: ListUpdateDto[];
-  items: ItemUpdateDto[];
 }

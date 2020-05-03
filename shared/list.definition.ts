@@ -41,3 +41,36 @@ export class ObjectWithState implements IObjectWithState {
     this.lastUpdated = new Date();
   }
 }
+
+export class ListUpdateDto {
+  id: Guid;
+  name: string;
+  state: ObjectState;
+
+  constructor(id: Guid, name: string, state: ObjectState) {
+    this.id = id;
+    this.name = name;
+    this.state = state;
+  }
+}
+
+export class ItemUpdateDto {
+  id: Guid;
+  listId: Guid;
+  name: string;
+  quantity: number;
+  state: ObjectState;
+
+  constructor(id: Guid, listId: Guid, name: string, quantity: number, state: ObjectState) {
+    this.id = id;
+    this.listId = listId;
+    this.name = name;
+    this.quantity = quantity;
+    this.state = state;
+  }
+}
+
+export class UpdateDto {
+  lists: ListUpdateDto[];
+  items: ItemUpdateDto[];
+}

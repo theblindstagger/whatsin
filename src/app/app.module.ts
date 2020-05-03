@@ -16,6 +16,7 @@ import { ListItemComponent } from './list-item/list-item.component';
 import { AppService } from './app.service';
 import { AddItemComponent } from './add-item/add-item.component';
 import { ListsStore } from './shared/lists.store';
+import { AuthenticateComponent } from './authenticate/authenticate.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { ListsStore } from './shared/lists.store';
     AddListComponent,
     ListDetailsComponent,
     ListItemComponent,
-    AddItemComponent
+    AddItemComponent,
+    AuthenticateComponent
   ],
   imports: [
     BrowserModule,

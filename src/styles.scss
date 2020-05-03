@@ -11,3 +11,21 @@ body {
   height: 100%; 
   font-family: Roboto, "Helvetica Neue", sans-serif; 
 }
+
+.content {  
+  padding-left: 0.5em;
+  padding-right: 0.5em;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.button-container {
+  display: flex;
+  justify-content: flex-end;
+
+  button {
+    margin-left: 1em;
+  }
+}
