@@ -10,6 +10,7 @@
     "test": "echo \"No tests yet...\""
   },
   "dependencies": {
+    "@types/node": "^13.13.4",
     "azure-storage": "^2.10.3",
     "dotenv": "^8.2.0",
     "guid-typescript": "^1.0.9",
