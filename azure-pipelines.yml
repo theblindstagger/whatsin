@@ -36,6 +36,7 @@ jobs:
           dist\**
           host.json
           initialise\**
+          login\**
           node_modules\**
           package.json
           ping\**
