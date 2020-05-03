@@ -9,9 +9,9 @@ export class Authenticator {
     const issueTime: moment.Moment = moment.utc();
 
     const payload = {
-      userId: userId,
-      issued: issueTime.toISOString(),
-      expiry: issueTime.add(1, "year").toISOString()
+      userId: userId.toString(),
+      issued: issueTime.unix(),
+      expiry: issueTime.add(1, "year").unix()
     };
 
     return jwt.encode(payload, secret);
@@ -19,7 +19,7 @@ export class Authenticator {
 
   public static isTokenValid(token: string) {
     const payload = jwt.decode(token, secret);
-    const expiry: moment.Moment = moment(payload.expiry);
+    const expiry: moment.Moment = moment.unix(payload.expiry).utc();
 
     return expiry.isBefore(moment().utc());
   }
