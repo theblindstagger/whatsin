@@ -1,6 +1,5 @@
 import * as storage from "azure-storage";
 import * as dotenv from "dotenv";
-import { resolve } from "url";
 
 dotenv.config();
 
